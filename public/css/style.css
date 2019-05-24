@@ -1,0 +1,32 @@
+* {
+    font-size: 100%;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+
+
+.product-section-images {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 1px;
+}
+
+.selected {
+    border: 4px solid lightblue;
+}
+
+.product-thumbnail {
+    display: flex;
+    align-items: center;
+    border: 1px lightgray;
+    min-height: 66px;
+    cursor: pointer;
+}
+
+.product-thumbnail:hover {
+    border: 1px solid lightblue;
+}
+
+#konten {
+    min-height: 1000px;
+}
