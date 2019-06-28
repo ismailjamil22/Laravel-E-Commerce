@@ -2,7 +2,7 @@
 
 @section('content')    
 
- <!-- Page Content -->
+ <!-- Page Content --> 
   <div class="container">
     <div class="row mt-4">
       <div class="col-md-4 offset-8">
@@ -14,6 +14,7 @@
             <option value="termurah">Termurah</option>
             <option value="termahal">Termahal</option>
             <option value="terbaru">Terbaru</option>
+            <option value="views">Paling Banyak di Lihat</option>            
           </select>
         </div>
       </div>
@@ -72,7 +73,7 @@
               </a>
             </div>
 
-            <div id="product-list">
+            <div id="product-list"> 
                 @foreach($product as $idx => $p)
                 @if ($idx == 0 || $idx % 4 == 0 )
                 <div class="row mt-4">
@@ -98,8 +99,9 @@
                         <a href=" {{ route('products.detail', $p->id) }} " class="btn btn-warning">Detail</a>
                       </div>
                     </div>
+                    
                   </div>
-                  @if ($idx >0 && $idx %4 ==3)
+                  @if ($idx >0 && $idx %4 == 3)
                 </div>      
                   @endif                
                 @endforeach
@@ -112,7 +114,7 @@
           </div>
           <!-- /.col-lg-9 -->
           <?php
-          $product = App\Models\Product::paginate(2);
+          $product = App\Models\Product::paginate(3);
           ?>
           <br>
           {{ $product->links() }}
@@ -138,8 +140,8 @@
                   },
                 dataType: 'json', 
                 success: function(data) {
-                    var products = '';
-                    $.each(data, function(idx, product) {
+                    var products = '';                    
+                    $.each(data, function(idx, product) { 
                         if (idx == 0 || idx % 4 == 0) {
                             products += '<div class= "row mt-4">';
                             
@@ -147,7 +149,7 @@
 
                         products += '<div class="col">' +
                             '<div class="card">' +
-                            '<img src="/products/'+ product.image_src+'" class="img img-thumbnail" style="width: 300px;height: 200px;">'+
+                            '<img src="/products/'+ products.image_src+'" class="img img-thumbnail" style="width: 300px;height: 200px;">'+
                             '<div class="card-body">' +
                             '<h5 class="card-title">' +
                             '<a href="/product-detail/' + product.id + '">' +
@@ -163,7 +165,8 @@
                             '</div>' +
                             '</div>'
                         if (idx > 0 && idx % 4 == 3) {
-                            products += '</div>'
+                            products += '</div>'                          
+                           
                         }
                     });
                     // update element

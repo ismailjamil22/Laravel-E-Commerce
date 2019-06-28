@@ -40,8 +40,8 @@ class ProductController extends Controller
     {
         $categories=Category::all();
         return view('admin.products.create',compact('categories'));
+     
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -98,7 +98,8 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $products = Product::find($id);       
+        $products = Product::find($id);
+            
         return view('admin.products.show', compact('products'));
     }
 
@@ -111,7 +112,8 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = Product::find($id);
-        return view('admin.products.edit', compact('product'));
+        $categories= $categories=Category::all();   
+        return view('admin.products.edit', compact('product','categories'));
     }
 
     /**

@@ -47,6 +47,9 @@
                     ?>
                     {{-- {{floatVal($rating)}} --}}
                 </h5>
+                <h5>
+                    <i class="text-warning fa fa-eye"></i>{{$products['view_count']}}
+                </h5>
             <div class="mt-4">
                 <a href="{{ route('carts.add', $products->id) }}" class="btn btn-primary">Buy</a>
                 <a href="{{ url('/') }}" class="btn btn-danger">Back</a>
@@ -57,7 +60,7 @@
                 <a href="https://twitter.com/intent/tweet?text=my share text&amp;url={{ route('products.show', ['id' => $products['id']]) }}" class="social-button" target="_blank"><span class="fa fa-twitter"></span>&nbsp;Share Twitter</a>
                 |
                 <a href="https://wa.me/?text={{ route('products.show', ['id' => $products['id']]) }}" class="social-button" target="_blank"><span class="fa fa-whatsapp"></span>&nbsp;Share Whatsapp</a>
-            </div
+            </div>
 
             <div class="mt-4">
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -70,8 +73,9 @@
                         {!! $products['description'] !!}
                     </div>
                     <div class="tab-pane fade" id="nav-review" role="tabpanel" aria-labelledby="nav-review-tab">
-                             @if (Auth::check())
-                            <form action="{{ route('posts.review') }}" method="POST" enctype="multipart/form-data">
+                             
+
+                            <form action="{{ route('posts.review') }}" method="POST" id="form-review" data-toggle="validator">
                             {{ csrf_field() }}
                             <input type="text" name="product_id" value="{{ $products['id'] }}" hidden>
                             <div class="form-group">
@@ -89,11 +93,12 @@
                             <div class="form-group">
                                 <label for="nama">Rating</label>
                                 <input class="form-control" type="text" name="rating" placeholder="Rating 1-5" id="nama">
-                            </div>                         
-
-                            <button type="submit" class="btn btn-primary">Submit</button>                           
+                            </div>
+                            <button type="submit" class="btn btn-primary" id="submit-button">Submit</button>                           
                         </form>
-                         @endif                                        
+                         
+                         
+                         
                         <br>
                         @foreach ($descriptions as $user)
                         <div class="container">
@@ -157,5 +162,39 @@
             currentImage.src = this.querySelector('img').src;
         }
     })();
+
+
+    // submit comment with ajax
+   $(function(){
+       $('#form-review form').validator().on('submit',function(e){
+           if(!e.isDefaultPrevented()){
+             $.ajax({
+                 url:'posts/review',
+                 type:"POST",
+                 data:$('#form-review').serialize(),
+                 contentType:false,
+                 processData:false,
+                    success:function(data){
+                        swal({
+                            title: "Thanks !",
+                            text: "Thanks For Review",
+                            icon: "success",
+                            button:"Great",
+                        });
+                    },
+                    error:function(data){
+                        swal({
+                            title: "Opppss....",
+                            text: data.message,
+                            type:error,
+                            timer: '1500', 
+                        })
+                    }
+             });
+             return false;
+           }
+       })
+   });
 </script>
+
 @endsection

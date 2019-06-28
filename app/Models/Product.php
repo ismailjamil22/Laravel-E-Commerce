@@ -35,7 +35,7 @@ class Product extends Model
     	{
     		$query  ->leftJoin('order_items', 'order_items.product_id','=','products.id')
                     ->select(DB::raw('sum(order_items.quantity) as quantity, products.*'))
-                    ->groupBy('products.id','products.user_id','products.name','products.price','products.description','products.image_url','products.video_url','products.category_id','products.created_at','products.updated_at')
+                    ->groupBy('products.id','products.user_id','products.name','products.price','products.description','products.image_url','products.video_url','products.category_id','products.created_at','products.updated_at','products.view_count')
                     ->orderBy('quantity','desc');
     	}
 
@@ -43,7 +43,7 @@ class Product extends Model
         {
             $query  ->leftJoin('product_reviews', 'product_reviews.product_id','=','products.id')
             ->select(DB::raw('avg(product_reviews.rating) as rating, products.*'))
-            ->groupBy('products.id','products.user_id','products.name','products.price','products.description','products.image_url','products.video_url','products.category_id','products.created_at','products.updated_at')
+            ->groupBy('products.id','products.user_id','products.name','products.price','products.description','products.image_url','products.video_url','products.category_id','products.created_at','products.updated_at','products.view_count')
             ->orderBy('rating','desc');
         }
 
@@ -70,8 +70,12 @@ class Product extends Model
         else if ($order_by == 'electronics')
     	{
             $query->where('category_id',3);
+        }
+        else if ($order_by == 'views')
+    	{
+    		$query->orderBy('view_count','desc');
     	}
-        return $query->paginate(2);
+        return $query->paginate(3);
     }
 
 

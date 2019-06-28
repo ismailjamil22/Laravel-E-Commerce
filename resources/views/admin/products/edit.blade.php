@@ -37,6 +37,18 @@
                     <label for="price">Price Product</label>
                     <input class="form-control" type="text" name="priceProduct" id="price" value="{{ $product['price'] }}">
                 </div>
+                <div class="form-group">
+                    <label for="category">Category Product</label>
+                    <select name="category" class="form-control">
+                        <option value="" disabled selected>
+                           
+                            @foreach ($categories as $category)
+                            {{$category->name}}                            
+                        <option value="{{$category->id}}">{{$category->name}}</option>
+                            @endforeach
+                        </option>
+                    </select>
+                </div>
                 <button type="submit" class="btn btn-primary">Update</button>
             </form>
         </div>

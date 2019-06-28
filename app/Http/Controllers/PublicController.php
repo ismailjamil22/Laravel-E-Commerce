@@ -65,15 +65,21 @@ class PublicController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        $productReview = new ProductReview();
-        $productReview->user_id = Auth::user()->id;
-        $productReview->product_id = $request->post('product_id');
-        $productReview->description = $request->post('description');
-        $productReview->rating = $request->post('rating');
-        if ($productReview->rating > 5) {
-            return redirect('/')->with('error', 'Rating must be 1 - 5');
+    {   
+        if ($request->ajax()) {
+            $productReview = new ProductReview();
+            $productReview->user_id = Auth::user()->id;
+            $productReview->product_id = $request->post('product_id');
+            $productReview->description = $request->post('description');
+            $productReview->rating = $request->post('rating');
+            if ($productReview->rating > 5) {
+                return redirect('/')->with('error', 'Rating must be 1 - 5');
+            }
+            return response()->json($productReview,200);
+        }else{
+           return("NOT WORKING");
         }
+
         $productReview->save(); 
         return back();
         // return redirect('/')->with('success', 'Product allready saved');
@@ -88,6 +94,7 @@ class PublicController extends Controller
      public function show($id)
     {
         $products = Product::find($id);
+        $views = $products->increment('view_count');
         $rating = $products->reviews()->avg('rating');  
          
        

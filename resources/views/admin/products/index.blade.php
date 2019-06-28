@@ -2,11 +2,12 @@
 
 @section('content')
 
-<div class="container-fluid">
+<div class="container-fluid">        
         <div>
                 <a href="{{route ('admin.products.create')}}" class="btn btn-primary">Tambah Product</a>
+                 
         </div>
-                <div class="col-md-4 offset-8">
+                <div class="col-md-4 offset-8">                    
                     <div class=" form-group">
                     <select name="" id="order_field" class="form-control">
                         <option value="" disabled selected>Urutkan</option>
@@ -17,9 +18,11 @@
                         <option value="terbaru">Terbaru</option>
                     </select>
                     </div>
-                </div>
+                </div>                
             <br>
     <!-- DataTales Product -->
+
+   
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Data Tables Product</h6>
